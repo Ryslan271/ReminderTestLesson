@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Reminder.CocnectDB;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +22,20 @@ namespace Reminder.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<ReminderTab> Reminders
+        {
+            get { return (ObservableCollection<ReminderTab>)GetValue(RemindersProperty); }
+            set { SetValue(RemindersProperty, value); }
+        }
+
+        public static readonly DependencyProperty RemindersProperty =
+            DependencyProperty.Register("Reminders", typeof(ObservableCollection<ReminderTab>), typeof(MainWindow));
+
+
         public MainWindow()
         {
+            Reminders = new ObservableCollection<ReminderTab>(App.DBConnection.ReminderTab);
+
             InitializeComponent();
         }
     }
