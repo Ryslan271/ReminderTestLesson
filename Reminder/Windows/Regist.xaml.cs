@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reminder.CocnectDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,44 @@ namespace Reminder.Windows
         {
             InitializeComponent();
         }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Login().ShowDialog();
+            Close();
+        }
+
+        private void RegistButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ValidateDataTextBoxs() == false)
+                return;
+
+            User user = App.DBConnection.User.FirstOrDefault(x => x.Login == LoginTextBox.Text.Trim());
+
+            if (user == null)
+            {
+                user = new User()
+                {
+                    Login = LoginTextBox.Text,
+                    Password = LoginTextBox.Text,
+                    Name = Name.Text
+                };
+
+                App.DBConnection.User.Add(user);
+
+                App.DBConnection.SaveChanges();
+
+                new MainWindow().ShowDialog();
+                Close();
+                return;
+            }
+
+            MessageBox.Show("Такой логин уже используется");
+        }
+
+        private bool ValidateDataTextBoxs() =>
+            LoginTextBox.Text == "" &&
+            PasswordTextBox.Text == "" &&
+            Name.Text == "";
     }
 }

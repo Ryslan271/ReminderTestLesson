@@ -30,7 +30,7 @@ namespace Reminder.Windows
             if (ValidateData())
                 return;
 
-            User user = App.DBConnect.User.FirstOrDefault(x => x.Login == LoginTextBox.Text.Trim() && x.Password == PasswordTextBox.Text.Trim());
+            User user = App.DBConnection.User.FirstOrDefault(x => x.Login == LoginTextBox.Text.Trim() && x.Password == PasswordTextBox.Text.Trim());
 
             if (user == null)
             {
@@ -48,7 +48,8 @@ namespace Reminder.Windows
 
         private void RegistButton_Click(object sender, RoutedEventArgs e)
         {
-
+            new Regist().ShowDialog();
+            Close();
         }
     }
 }

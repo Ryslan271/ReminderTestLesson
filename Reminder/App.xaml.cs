@@ -9,12 +9,12 @@ namespace Reminder
     /// </summary>
     public partial class App : Application
     {
-        public static ReminderDBEntities DBConnect = new ReminderDBEntities();
+        public static ReminderDBEntities DBConnection = new ReminderDBEntities();
 
         public App()
         {
-            DBConnect.User.Load();
-            DBConnect.ReminderTab.Load();
+            DBConnection.User.Load();
+            DBConnection.ReminderTab.Load();
         }
     }
 }
